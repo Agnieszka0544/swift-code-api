@@ -1,0 +1,28 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/swift-codes
+      - PORT=3000
+    depends_on:
+      - mongo
+    volumes:
+      - /usr/src/app/node_modules
+      - ./swift-codes.xlsx:/usr/src/app/swift-codes.xlsx
+
+  mongo:
+    image: mongo:latest
+    container_name: swift-codes-mongodb
+    ports:
+      - "27020:27017"
+    command: ["--bind_ip_all"]
+    volumes:
+      - ./swift-codes-data:/data/db
+    restart: unless-stopped
+
+volumes:
+  swift-codes-data:

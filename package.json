@@ -1,0 +1,28 @@
+{
+    "name": "swift-codes",
+    "main": "build/server.js",
+    "type": "module",
+    "scripts": {
+        "dev": "ts-node-dev src/app.ts",
+        "start": "node build/server.js",
+        "build": "tsc"
+    },
+    "dependencies": {
+        "dotenv": "^16.0.0",
+        "mongoose": "^7.0.0",
+        "xlsx": "^0.18.5"
+    },
+    "devDependencies": {
+        "@types/express": "^4.17.21",
+        "@types/node": "^18.19.86",
+        "@types/xlsx": "^0.0.35",
+        "express": "^5.1.0",
+        "ts-node": "^10.9.2",
+        "ts-node-dev": "^2.0.0",
+        "typescript": "^5.8.3"
+    },
+    "version": "1.0.0",
+    "author": "Agnieszka Trojanowska",
+    "license": "ISC",
+    "description": ""
+}
