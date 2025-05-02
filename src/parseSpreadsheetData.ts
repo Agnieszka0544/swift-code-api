@@ -1,55 +1,27 @@
-import xlsx from 'xlsx'; // ESModule-style
-
-
-type SwiftCodeEntry = {
-  countryISO2: string,
-  swiftCode: string
-  codeType: string,
-  bankName: string,
-  address: string,
-  town: string,
-  countryName: string,
-  timezone: string,
-  isHeadquarter: boolean;
-  headquarterCode: string;
-};
+import xlsx from 'xlsx'; 
+import { SwiftCodeEntry } from './types.js';
 
 function parseSwiftData(filePath: string): SwiftCodeEntry[] {
   const file = xlsx.readFile(filePath);
   const sheetName = file.SheetNames[0];
-  // console.log(file.SheetNames[0]);
   const sheet = file.Sheets[sheetName];
   const data = xlsx.utils.sheet_to_json<{ [key: string]: string }>(sheet);
-  // console.log(data);
 
-  const results: SwiftCodeEntry[] = data.map((row) => {
-    const countryISO2: string = row['COUNTRY ISO2 CODE'];
-    const swiftCode: string = row['SWIFT CODE'];
-    const codeType: string = row['CODE TYPE'];
-    const bankName: string = row['NAME'];
-    const address: string = row['ADDRESS'];
-    const town: string = row['TOWN NAME'];
-    const countryName: string = row['COUNTRY NAME'];
-    const timezone: string = row['TIME ZONE'];
-    const isHeadquarter = swiftCode.endsWith('XXX');
-    const headquarterCode = swiftCode.substring(0, 8);
-
-
+  return data.map((row): SwiftCodeEntry => {
+    const swiftCode = row['SWIFT CODE'];
     return {
-      countryISO2,
+      countryISO2: row['COUNTRY ISO2 CODE'],
       swiftCode,
-      codeType,
-      bankName,
-      address,
-      town,
-      countryName,
-      timezone,
-      isHeadquarter,
-      headquarterCode
+      codeType: row['CODE TYPE'],
+      bankName: row['NAME'],
+      address: row['ADDRESS'],
+      town: row['TOWN NAME'],
+      countryName: row['COUNTRY NAME'],
+      timezone: row['TIME ZONE'],
+      isHeadquarter: swiftCode.endsWith('XXX'),
+      headquarterCode: swiftCode.substring(0, 8),
     };
   });
-
-  return results;
-}
+};
 
 export default parseSwiftData;

@@ -3,7 +3,6 @@ import { SwiftCode } from '../models/SwiftCode.js';
 
 const router = express.Router();
 
-// POST /v1/swift-codes/
 router.post('/', async (req, res) => {
   try {
     const swiftCodeEntry = new SwiftCode(req.body);
@@ -19,7 +18,6 @@ router.post('/', async (req, res) => {
 });
 
 
-// GET /v1/swift-codes/:swiftCode
 router.get('/:swiftCode', async (req, res) => {
   try {
     const swiftCode = req.params.swiftCode;
@@ -29,7 +27,7 @@ router.get('/:swiftCode', async (req, res) => {
       return res.status(404).json({ message: 'SWIFT code not found' });
     }
 
-    const baseResponse: any = {
+    const response: any = {
       address: entry.address,
       bankName: entry.bankName,
       countryISO2: entry.countryISO2,
@@ -41,7 +39,7 @@ router.get('/:swiftCode', async (req, res) => {
     if (entry.isHeadquarter) {
       const branches = await SwiftCode.find({
         headquarterCode: entry.headquarterCode,
-        swiftCode: { $ne: entry.swiftCode } // exclude the HQ itself
+        swiftCode: { $ne: entry.swiftCode }
       });
 
       const branchesResponse = branches.map((branch) => {
@@ -54,10 +52,10 @@ router.get('/:swiftCode', async (req, res) => {
         };
       });
 
-      baseResponse.branches = branchesResponse;
+      response.branches = branchesResponse;
     } 
 
-    res.json(baseResponse);
+    res.json(response);
 
   } catch (err) {
     let errorMessage = "Failed to find SWIFT code";
@@ -77,7 +75,7 @@ router.get('/country/:countryISO2code', async (req, res) => {
       return res.status(404).json({ message: 'SWIFT code not found' });
     }
 
-    const baseResponse: any = {
+    const response: any = {
       countryISO2: entry.countryISO2,
       countryName: entry.countryName,
     };
@@ -96,9 +94,9 @@ router.get('/country/:countryISO2code', async (req, res) => {
       };
     });
 
-    baseResponse.swiftCodes = branchesResponse;
+    response.swiftCodes = branchesResponse;
 
-    res.json(baseResponse);
+    res.json(response);
 
   } catch (err) {
     let errorMessage = "Failed to find SWIFT code";
@@ -110,10 +108,10 @@ router.get('/country/:countryISO2code', async (req, res) => {
 });
 
 
-// DELETE /v1/swift-codes/
 router.delete('/:swiftCode', async (req, res) => {
   try {
-    await SwiftCode.deleteOne({ swiftCode: req.params.swiftCode });    res.status(200).json({ message: "Successfully deleted" });
+    await SwiftCode.deleteOne({ swiftCode: req.params.swiftCode });    
+    res.status(200).json({ message: "Successfully deleted" });
   } catch (err) {
     let errorMessage = "Failed to delete SWIFT code";
     if (err instanceof Error) {
@@ -122,7 +120,6 @@ router.delete('/:swiftCode', async (req, res) => {
     res.status(400).json({ error: errorMessage });
   }
 });
-
 
 
 export default router;
