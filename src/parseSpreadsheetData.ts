@@ -2,16 +2,16 @@ import xlsx from 'xlsx'; // ESModule-style
 
 
 type SwiftCodeEntry = {
-    countryIso2Code: string,
-    swiftCode: string
-    codeType: string,
-    bankName: string,
-    address: string,
-    town: string,
-    country: string,
-    timezone: string,
-    isHeadquarter: boolean;
-    headquarterCode: string;
+  countryISO2: string,
+  swiftCode: string
+  codeType: string,
+  bankName: string,
+  address: string,
+  town: string,
+  countryName: string,
+  timezone: string,
+  isHeadquarter: boolean;
+  headquarterCode: string;
 };
 
 function parseSwiftData(filePath: string): SwiftCodeEntry[] {
@@ -23,26 +23,26 @@ function parseSwiftData(filePath: string): SwiftCodeEntry[] {
   // console.log(data);
 
   const results: SwiftCodeEntry[] = data.map((row) => {
-    const countryIso2Code: string = row['COUNTRY ISO2 CODE'];
+    const countryISO2: string = row['COUNTRY ISO2 CODE'];
     const swiftCode: string = row['SWIFT CODE'];
     const codeType: string = row['CODE TYPE'];
     const bankName: string = row['NAME'];
     const address: string = row['ADDRESS'];
     const town: string = row['TOWN NAME'];
-    const country: string = row['COUNTRY NAME'];
+    const countryName: string = row['COUNTRY NAME'];
     const timezone: string = row['TIME ZONE'];
     const isHeadquarter = swiftCode.endsWith('XXX');
     const headquarterCode = swiftCode.substring(0, 8);
 
 
     return {
-      countryIso2Code,
+      countryISO2,
       swiftCode,
       codeType,
       bankName,
       address,
       town,
-      country,
+      countryName,
       timezone,
       isHeadquarter,
       headquarterCode
