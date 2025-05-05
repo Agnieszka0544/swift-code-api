@@ -1,5 +1,5 @@
-import { SwiftCode } from './models/SwiftCode.js';
-import { SwiftCodeEntry } from './types.js';
+import { SwiftCode } from './models/SwiftCode';
+import { SwiftCodeEntry } from './types';
 
 async function storeSwiftData(entries: SwiftCodeEntry[]) {
   try {
