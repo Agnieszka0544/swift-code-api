@@ -1,5 +1,5 @@
 import xlsx from 'xlsx'; 
-import { SwiftCodeEntry } from './types.js';
+import { SwiftCodeEntry } from './types';
 
 function parseSwiftData(filePath: string): SwiftCodeEntry[] {
   const file = xlsx.readFile(filePath);
@@ -8,16 +8,16 @@ function parseSwiftData(filePath: string): SwiftCodeEntry[] {
   const data = xlsx.utils.sheet_to_json<{ [key: string]: string }>(sheet);
 
   return data.map((row): SwiftCodeEntry => {
-    const swiftCode = row['SWIFT CODE'];
+    const swiftCode = row['SWIFT CODE'].toUpperCase();
     return {
-      countryISO2: row['COUNTRY ISO2 CODE'],
+      countryISO2: row['COUNTRY ISO2 CODE'].toUpperCase(),
       swiftCode,
-      codeType: row['CODE TYPE'],
-      bankName: row['NAME'],
-      address: row['ADDRESS'],
-      town: row['TOWN NAME'],
-      countryName: row['COUNTRY NAME'],
-      timezone: row['TIME ZONE'],
+      codeType: row['CODE TYPE'].toUpperCase(),
+      bankName: row['NAME'].toUpperCase(),
+      address: row['ADDRESS'].toUpperCase(),
+      town: row['TOWN NAME'].toUpperCase(),
+      countryName: row['COUNTRY NAME'].toUpperCase(),
+      timezone: row['TIME ZONE'].toUpperCase(),
       isHeadquarter: swiftCode.endsWith('XXX'),
       headquarterCode: swiftCode.substring(0, 8),
     };
