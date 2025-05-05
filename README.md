@@ -1,26 +1,10 @@
-<!-- Prerekwizyty:
-Zainstalowany Docker Compose
-Zainstalowany git
-
-Instalacja:
-
-git clone https://github.com/Agnieszka0544/swift-code-api.git
-
-W głównym katalogu projektu:
-docker-compose build
-docker-compose up
-
-localhost:8080/v1/swift-codes -->
-
 # Swift Code API
 
-A simple API service for retrieving SWIFT codes.
+A simple API service for retrieving banking data based on SWIFT and ISO2 codes.
 
 ## Prerequisites
 
-Before you begin, ensure you have the following installed:
-
-- [Docker](https://docs.docker.com/compose/install/)
+Before you begin, ensure you have [Docker](https://docs.docker.com/compose/install/) installed.
 
 ## Installation and running the project
 
